@@ -1,10 +1,10 @@
 import {
-    Image,
-    StyleSheet,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    View,
+  Image,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
 } from "react-native";
 
 const latihan_3 = () => {
@@ -13,7 +13,7 @@ const latihan_3 = () => {
     nim: "20200101",
     address:
       "Jl. Rangga Gading, No.01, Gudang, Kecamatan Bogor Tengah, Kota Bogor, Jawa Barat",
-    email: "anton.sukamto@ibik.ac.id",
+    email: "Nabilla Zian@ibik.ac.id",
     phone_number: "081234567890",
   };
 
@@ -26,6 +26,9 @@ const latihan_3 = () => {
       />
       <Text style={styles.header.title}>Nama: {PersonalData.name}</Text>
       <Text style={styles.header.subtitle}>NIM: {PersonalData.nim}</Text>
+      <Text style={styles.header.title}>No.Hp: {PersonalData.phone_number}</Text>
+      <Text style={styles.header.subtitle}>Email: {PersonalData.email}</Text>
+      <Text style={styles.header.subtitle}>Alamat: {PersonalData.address}</Text>
 
       {/* Input Phone */}
       <View style={styles.identity.container}>
@@ -92,7 +95,7 @@ const styles = StyleSheet.create({
       borderWidth: 4,
       padding: 2,
       backgroundColor: "#f2f2f2",
-      borderColor: "#f2f2f2", // Menambahkan warna border agar terlihat
+      borderColor: "#f2f2f2", 
     },
   },
   identity: {
