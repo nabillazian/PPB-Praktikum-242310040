@@ -17,8 +17,8 @@ export default function RootLayout() {
       // <StatusBar style="auto" />
     // </ThemeProvider>
     <>
-      <Stack screenOptions={{headerShown: false}}/>
-      <StatusBar style='auto'/>
+      <StatusBar style="auto" hidden/>
+      <Stack screenOptions={{ headerShown: false }} />
     </>
   );
 }

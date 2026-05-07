@@ -1,76 +1,87 @@
-// 
-import { FlatList, Image, StyleSheet, Text, View } from "react-native";
+import AntDesign from "@expo/vector-icons/AntDesign";
+import Ionicons from "@expo/vector-icons/Ionicons";
+import { Image, Text, TouchableOpacity, View } from "react-native";
+import { color_list, styles } from "../components/style/StyleApp";
 
-const DATA = [
-  {
-    id: "1",
-    title: "Chainsaw Man: Pochita",
-    author: "Tatsuki Fujimoto",
-    rating: 4.7,
-    price: 3500,
-    image: "https://via.placeholder.com/150",
-  },
-  {
-    id: "2",
-    title: "UI/UX Design for Mobile",
-    author: "Design Pro",
-    rating: 4.4,
-    price: 1100,
-    image: "https://via.placeholder.com/150",
-  },
-];
-
-export default function BookCollections() {
+export default function BookCollectioins({ books }) {
+  const sortedBooks = [...books].sort((a, b) => b.id - a.id);
   return (
-    <FlatList
-      data={DATA}
-      numColumns={2}
-      keyExtractor={(item) => item.id}
-      columnWrapperStyle={{ justifyContent: "space-between" }}
-      renderItem={({ item }) => (
-        <View style={styles.card}>
-          <Image source={{ uri: item.image }} style={styles.image} />
+    <View style={styles.container_book_collections}>
+      <View style={styles.h_container}>
+        <Text style={styles.container_book_collections_title}>
+          Book Collection
+        </Text>
+        <Text style={{ color: color_list.green }}>
+          Total {books.length} Items
+        </Text>
+      </View>
 
-          <Text style={styles.title} numberOfLines={2}>
-            {item.title}
-          </Text>
-
-          <Text style={styles.author}>{item.author}</Text>
-
-          <View style={styles.row}>
-            <Text>⭐ {item.rating}</Text>
-            <Text>💰 {item.price}</Text>
-          </View>
-        </View>
-      )}
-    />
+      <BookList books={sortedBooks} />
+    </View>
   );
 }
 
-const styles = StyleSheet.create({
-  card: {
-    width: "48%",
-    backgroundColor: "#fff",
-    borderRadius: 10,
-    marginBottom: 16,
-    padding: 8,
-  },
-  image: {
-    width: "100%",
-    height: 120,
-    borderRadius: 10,
-  },
-  title: {
-    fontWeight: "bold",
-    marginTop: 6,
-  },
-  author: {
-    color: "gray",
-    fontSize: 12,
-  },
-  row: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginTop: 6,
-  },
-});
+const BookList = ({ books }) => {
+  return (
+    <View style={styles.book_grid}>
+      {books.map((book, index) => (
+        <TouchableOpacity
+          key={index}
+          style={[styles.book_card, styles.shadow]}
+          activeOpacity={0.7}
+        >
+          <BookItemImg book={book} />
+          <BookItemContent book={book} />
+        </TouchableOpacity>
+      ))}
+    </View>
+  );
+};
+
+const BookItemImg = ({ book }) => {
+  return (
+    <View style={{ position: "relative" }}>
+      <Image
+        source={book.img}
+        style={styles.book_card_img}
+        resizeMode="cover"
+      />
+      {!book.is_free && (
+        <View style={[styles.circle_premium_small, styles.shadow]}>
+          <AntDesign name="crown" size={18} color="black" />
+        </View>
+      )}
+    </View>
+  );
+};
+
+const BookItemContent = ({ book }) => {
+  return (
+    <View style={{ padding: 10 }}>
+      <Text
+        style={styles.book_card_title}
+        numberOfLines={2}
+        ellipsizeMode="tail"
+      >
+        {book.title}
+      </Text>
+      <Text style={styles.book_card_author} numberOfLines={1}>
+        {book.author}
+      </Text>
+      {/* RATING & VIEWERS */}
+      <View style={styles.book_card_footer}>
+        <View style={{ flexDirection: "row", alignItems: "center" }}>
+          <AntDesign name="star" size={14} color={color_list.orange} />
+          <Text style={styles.book_card_rating}>{book.rating}</Text>
+        </View>
+        {book.views && (
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <Ionicons name="eye-outline" size={14} color="gray" />
+            <Text style={styles.book_card_views}>{book.views}</Text>
+          </View>
+        )}
+      </View>
+      {/* END RATING & VIEWERS */}
+    </View>
+  );
+};

@@ -1,6 +1,9 @@
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { Image, Text, TouchableOpacity, View } from "react-native";
-import { styles } from "../components/style/StyleApp";
+// import { ButtonRead } from "react-native-web";
+import { useRouter } from "expo-router";
+import { styles } from "./style/StyleApp";
+
 
 const CTABook = ({ book }) => {
   return (
@@ -17,7 +20,7 @@ const CTABook = ({ book }) => {
           }}
         >
           <CTAInfoBook book={book} />
-          <ButtonRead />
+          <ButtonRead book={book} />
         </View>
       </View>
     </View>
@@ -61,10 +64,18 @@ const CTAInfoBook = ({ book }) => {
   );
 };
 
-const ButtonRead = () => {
+
+
+const ButtonRead = ({ book }) => {
+  const router = useRouter();
+
+  const handleReadNow = () => {
+    if (!book?.id) return; 
+    router.push(`/books/${book.id}`);
+  };
   return (
-    <TouchableOpacity style={[styles.btn_read, styles.shadow]}>
-      <Text style={styles.btn_read_text}>Read Now</Text>
+    <TouchableOpacity style={styles.btn_read} onPress={handleReadNow} >
+      <Text style={styles.btn_read_text}>Read More</Text>
     </TouchableOpacity>
   );
 };
